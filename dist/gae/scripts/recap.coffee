@@ -385,7 +385,7 @@ class RecapAnnotator
         pairNameCell = newRow.insertCell(-1)
         bidderLink = document.createElement 'A'
         round = model.Round.fromBoardAndCallHistory(board, callHistory)
-        bidderLink.href = '/bid/' + round.identifier()
+        bidderLink.href = (window.URL_PREFIX || "") + '/bid/' + round.identifier()
         bidderLink.textContent = "SAYCBridge Autobidder"
         pairNameCell.appendChild bidderLink
 

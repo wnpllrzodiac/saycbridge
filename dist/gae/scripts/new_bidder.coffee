@@ -305,14 +305,18 @@ class MainController
         return basePath != "/play"
 
     cannonicalizeBasePath: (basePath) ->
+        prefix = window.URL_PREFIX || ""
         if basePath == "/play"
-            return basePath
-        return "/bid"
+            return prefix + basePath
+        return prefix + "/bid"
 
     setTitle: (title) ->
         document.title = title + " - SAYC Bridge"
 
     basePathAndRoundFromPath: (path) ->
+        prefix = window.URL_PREFIX || ""
+        if prefix and path.indexOf(prefix) == 0
+            path = path.substring(prefix.length) || "/"
         pathWithoutLeadingSlash = path[1..]
         if '/' in pathWithoutLeadingSlash
             [basePath, roundIdentifier] = pathWithoutLeadingSlash.split('/')

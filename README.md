@@ -74,16 +74,19 @@ Create `/etc/systemd/system/saycbridge.service`:
     After=network.target
 
     [Service]
+    User=zodiac
     WorkingDirectory=/path/to/saycbridge/src
     ExecStart=/path/to/saycbridge/src/.venv/bin/python /path/to/saycbridge/dist/gae/app.py
     Restart=on-failure
     Environment=PORT=19883
+    Environment=URL_PREFIX=/hp/bridge
 
     [Install]
     WantedBy=multi-user.target
 
 Then enable and start it:
 
+    sudo systemctl daemon-reload
     sudo systemctl enable --now saycbridge
 
 **4. (Optional) Nginx reverse proxy** for port 80/443:
