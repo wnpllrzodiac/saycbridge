@@ -46,6 +46,51 @@ Useful URLs once running:
 - `/json/interpret` — JSON endpoint: interpret a bidding sequence
 
 
+Deploying on a VPS
+------------------
+
+**1. Install dependencies:**
+
+    git clone <your-repo-url> saycbridge
+    cd saycbridge/src
+    uv sync
+
+**2. Pre-compile CoffeeScript** (requires Node.js + CoffeeScript; avoids runtime compilation):
+
+    dist/gae/build-js
+
+**3. Run as a systemd service:**
+
+Create `/etc/systemd/system/saycbridge.service`:
+
+    [Unit]
+    Description=SAYCBridge
+    After=network.target
+
+    [Service]
+    WorkingDirectory=/path/to/saycbridge/src
+    ExecStart=/path/to/saycbridge/src/.venv/bin/python /path/to/saycbridge/dist/gae/app.py
+    Restart=on-failure
+    Environment=PORT=19883
+
+    [Install]
+    WantedBy=multi-user.target
+
+Then enable and start it:
+
+    sudo systemctl enable --now saycbridge
+
+**4. (Optional) Nginx reverse proxy** for port 80/443:
+
+    location / {
+        proxy_pass http://127.0.0.1:19883;
+    }
+
+> **Note:** There is a known Z3 memory leak — the process will grow memory under
+> load. Consider adding memory limits in the systemd unit or wrapping the app in
+> the `production.sh` restart loop.
+
+
 Running the Tests
 -----------------
 
