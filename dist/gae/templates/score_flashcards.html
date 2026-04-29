@@ -5,13 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 <meta name="description" content="Flashcards for practicing scoring contract bridge">
 <meta http-equiv="X-UA-Compatible" content="chrome=1">
-<script src="/scripts/third_party/jquery-1.6.2.min.js"></script>
-<script src="/scripts/third_party/jquery.history.js"></script>
-<script src="/scripts/model.js"></script>
-<script src="/scripts/view.js"></script>
-<script src="/scripts/controller.js"></script>
-<script src="/scripts/score_flashcards.js"></script>
-<link rel="stylesheet" type="text/css" href="/stylesheets/hand.css" />
+<script src="{{ url_prefix }}/scripts/third_party/jquery-1.6.2.min.js"></script>
+<script src="{{ url_prefix }}/scripts/third_party/jquery.history.js"></script>
+<script src="{{ url_prefix }}/scripts/model.js"></script>
+<script src="{{ url_prefix }}/scripts/view.js"></script>
+<script src="{{ url_prefix }}/scripts/controller.js"></script>
+<script src="{{ url_prefix }}/scripts/score_flashcards.js"></script>
+<link rel="stylesheet" type="text/css" href="{{ url_prefix }}/stylesheets/hand.css" />
 <style>
 body {
     width: 310px; /*Leaves just enought room for android scrollbars*/
@@ -95,7 +95,7 @@ tr.total td {
 
 <p>We would love to hear your suggestions!  Reach us via <a href='mailto:contact@saycbridge.com'>email</a> or <a href='https://twitter.com/#!/SAYCBridge'>twitter</a>.
 
-<p>If you like our scoring flashcards, we suggest you try our <a href='/bid'>practice bidder</a> or <a href='/explore'>Standard American Yellow Card convention explorer</a>.</p>
+<p>If you like our scoring flashcards, we suggest you try our <a href='{{ url_prefix }}/bid'>practice bidder</a> or <a href='{{ url_prefix }}/explore'>Standard American Yellow Card convention explorer</a>.</p>
 
 <p>Have fun!
 </div>

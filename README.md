@@ -88,9 +88,26 @@ Then enable and start it:
 
 **4. (Optional) Nginx reverse proxy** for port 80/443:
 
+Serving at the domain root:
+
     location / {
         proxy_pass http://127.0.0.1:19883;
     }
+
+Serving under a path prefix (e.g. `/hp/bridge/`):
+
+    location /hp/bridge/ {
+        proxy_pass http://127.0.0.1:19883/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+When using a prefix, set `URL_PREFIX` in the systemd unit so the app generates
+correct asset and navigation URLs:
+
+    Environment=URL_PREFIX=/hp/bridge
 
 > **Note:** There is a known Z3 memory leak — the process will grow memory under
 > load. Consider adding memory limits in the systemd unit or wrapping the app in
@@ -161,11 +178,10 @@ Code Layout
       tests/         # Regression test harness and test_sayc.py
 
     dist/gae/
-      app.py         # Flask application entry point
+      app.py         # Flask app entry point (URL_PREFIX env var for sub-path proxying)
       handlers/      # One module per route group
       templates/     # Jinja2 HTML templates
       scripts/       # CoffeeScript frontend (compiled to JS)
-      app.py         # Flask app + entry point (DEBUG=1 for dev mode)
       build-js       # Pre-compile CoffeeScript to JS for production
       production.sh  # Production deploy loop
 

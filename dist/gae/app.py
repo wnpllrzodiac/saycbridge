@@ -16,6 +16,13 @@ COFFEE_BIN = '/home/zodiac/work/tools/node-v22.21.0-linux-x64/bin/coffee'
 
 app = Flask(__name__, template_folder='templates')
 
+URL_PREFIX = os.environ.get('URL_PREFIX', '').rstrip('/')
+app.config['URL_PREFIX'] = URL_PREFIX
+
+@app.context_processor
+def inject_url_prefix():
+    return {'url_prefix': URL_PREFIX}
+
 def serve_scripts(filename):
     scripts_dir = os.path.join(GAE_DIR, 'scripts')
     js_path = os.path.join(scripts_dir, filename)

@@ -7,7 +7,7 @@ import json
 import subprocess
 import urllib.parse
 
-from flask import request, make_response, redirect, render_template
+from flask import current_app, request, make_response, redirect, render_template
 
 from core.call import Pass
 from core.callexplorer import CallExplorer
@@ -31,7 +31,8 @@ def explore(calls_string=None):
     calls_string = urllib.parse.unquote(calls_string)
     history = _history_from_calls_string(calls_string)
     if calls_string and history.comma_separated_calls() != calls_string:
-        return redirect("/explore/%s" % history.comma_separated_calls())
+        url_prefix = current_app.config.get('URL_PREFIX', '')
+        return redirect("%s/explore/%s" % (url_prefix, history.comma_separated_calls()))
     return render_template('explore.html', bidder_revision=BIDDER_REVISION)
 
 
