@@ -78,12 +78,12 @@ class StrainView extends SuitView
     cssClass: ->
         if @strain.name == 'N'
             return 'notrump'
-        return super
+        return super()
 
     displayString: ->
         if @strain.name == 'N'
             return 'NT'
-        return super
+        return super()
 
     @fragmentReplacingStrainChars: (string) ->
         fragment = document.createDocumentFragment()
@@ -270,7 +270,7 @@ class DealView extends PositionGrid
 
     constructor: (@deal) ->
         @className = 'deal'
-        super
+        super()
         @setupView()
 
     setupView: ->
@@ -1037,7 +1037,7 @@ class AutobidResult extends HTMLDivElement
 class TrickView extends PositionGrid
     constructor: (@trick, @nextToPlay) ->
         @className = 'trick'
-        super
+        super()
         @setupView()
 
     # This may belong somewhere else.
@@ -1084,7 +1084,7 @@ class LastTrickView extends HTMLDivElement
 class PositionLabels extends PositionGrid
     constructor: ->
         @className = 'positionlabels'
-        super
+        super()
         @setupView()
 
     setupView: ->
@@ -1104,7 +1104,7 @@ class PlayTable extends PositionGrid
 
     constructor: (@player, @deal, @playHistory) ->
         @className = 'playtable'
-        super
+        super()
         @updateView()
         @shouldShowAllHands = false
 

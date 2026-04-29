@@ -59,7 +59,7 @@ Deploying on a VPS
 
 Install CoffeeScript if you haven't already:
 
-    npm install -g coffeescript
+    npm install -g coffeescript@1.4
 
 Then compile the scripts:
 

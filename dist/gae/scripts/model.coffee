@@ -509,6 +509,7 @@ class Board
 
     @fromIdentifier: (identifer) ->
         [number, dealIdentifier] = identifer.split('-')
+        return null unless dealIdentifier
         return new Board +number, Deal.fromIdentifier(dealIdentifier)
 
     toJSON: ->
@@ -926,6 +927,7 @@ class Round
             boardIdentifier = boardAndCallHistoryIdentifer
 
         board = Board.fromIdentifier boardIdentifier
+        return null unless board
         return new Round board, callHistory, playHistory
 
 
