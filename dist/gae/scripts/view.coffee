@@ -36,7 +36,7 @@ alloc = (constructor, args...) ->
 
 class WaitingImage extends HTMLImageElement
     constructor: ->
-        @src = '/images/spinner.gif'
+        @src = (window.URL_PREFIX || '') + '/images/spinner.gif'
 
     @new: ->
         return alloc @

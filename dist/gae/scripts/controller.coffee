@@ -18,7 +18,7 @@ $(window).bind 'beforeunload', (event) =>
 
 
 class Autobidder
-    @autobidURL = "/json/autobid"
+    @autobidURL = (window.URL_PREFIX || "") + "/json/autobid"
 
     @updateInterpreterCache: (board, callHistory, interpretedCalls) ->
         firstInterpretedIndex = callHistory.calls.length - interpretedCalls.length
@@ -94,8 +94,8 @@ class InterpretationCache
 
 
 class BidInterpreter
-    @interpretURL = "/json/interpret"
-    @interpret2URL = "/json/interpret2"
+    @interpretURL = (window.URL_PREFIX || "") + "/json/interpret"
+    @interpret2URL = (window.URL_PREFIX || "") + "/json/interpret2"
     @cache = new InterpretationCache
 
     @cachedInterpretationForLastCallInCallsFromBoard: (calls, board) ->
