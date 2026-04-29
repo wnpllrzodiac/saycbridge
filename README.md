@@ -57,6 +57,12 @@ Deploying on a VPS
 
 **2. Pre-compile CoffeeScript** (requires Node.js + CoffeeScript; avoids runtime compilation):
 
+Install CoffeeScript if you haven't already:
+
+    npm install -g coffeescript
+
+Then compile the scripts:
+
     dist/gae/build-js
 
 **3. Run as a systemd service:**

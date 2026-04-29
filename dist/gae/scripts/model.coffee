@@ -126,10 +126,10 @@ class Strain
 
 
 class Suit extends Strain
-    constructor: (@name) ->
+    constructor: (name) ->
+        super name
         if @name not in 'CDHS'
             throw "Unknown Suit " + @name
-        super @name
 
     @SUITS = @STRAINS[0..3]
 
