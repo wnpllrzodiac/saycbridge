@@ -1,10 +1,7 @@
-from __future__ import print_function
 # Copyright (c) 2013 The SAYCBridge Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-from builtins import map
-from builtins import object
 from core.call import Call
 from itertools import chain
 from functools import cache
@@ -136,7 +133,7 @@ class CompiledRule(object):
         exprs = []
         per_call_constraints, _ = self.per_call_constraints_and_priority(
             history, call)
-        if per_call_constraints:
+        if per_call_constraints is not None:
             exprs.extend(RuleCompiler.exprs_from_constraints(
                 per_call_constraints, history, call))
         exprs.extend(RuleCompiler.exprs_from_constraints(
@@ -190,14 +187,14 @@ class CompiledRule(object):
 class RuleCompiler(object):
     @classmethod
     def exprs_from_constraints(cls, constraints, history, call):
-        if not constraints:
-            return [model.NO_CONSTRAINTS]
-
         if isinstance(constraints, Constraint):
             return [constraints.expr(history, call)]
 
         if isinstance(constraints, z3.ExprRef):
             return [constraints]
+
+        if not constraints:
+            return [model.NO_CONSTRAINTS]
 
         return chain.from_iterable([cls.exprs_from_constraints(constraint, history, call) for constraint in constraints])
 

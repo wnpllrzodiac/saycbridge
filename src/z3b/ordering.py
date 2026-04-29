@@ -1,5 +1,3 @@
-from builtins import range
-from builtins import object
 import functools
 import networkx
 
@@ -47,7 +45,7 @@ class Ordering(object):
         if self._compiled:
             return
 
-        for left in self._graph.nodes_iter():
+        for left in self._graph.nodes():
             for right in networkx.descendants(self._graph, left):
                 self._graph.add_edge(left, right)
 

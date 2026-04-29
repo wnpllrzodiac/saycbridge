@@ -1,16 +1,7 @@
-from __future__ import division
-from __future__ import print_function
-from __future__ import division
 # Copyright (c) 2013 The SAYCBridge Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-from builtins import zip
-from builtins import filter
-from builtins import map
-from builtins import str
-from builtins import range
-from builtins import object
 from core.call import Call
 from core.callexplorer import CallExplorer
 from core.callhistory import CallHistory
@@ -162,8 +153,8 @@ class History(object):
     # FIXME: Unclear if Rule should be stored on History at all.
     def __init__(self, previous_history=None, call=None, annotations=None, constraints=None, rule=None):
         self._previous_history = previous_history
-        self._annotations_for_last_call = annotations if annotations else []
-        self._constraints_for_last_call = constraints if constraints else []
+        self._annotations_for_last_call = annotations if annotations is not None else []
+        self._constraints_for_last_call = constraints if constraints is not None else []
         self._rule_for_last_call = rule
         self.call_history = copy.deepcopy(
             self._previous_history.call_history) if self._previous_history else CallHistory()
@@ -204,14 +195,20 @@ class History(object):
             previous_history = self._history_after_last_call_for(position)
             if not previous_history:
                 continue
-            _solver_pool.restore(previous_history._solver.take())
+            if hasattr(previous_history, '_solver_instance'):
+                _solver_pool.restore(previous_history._take_solver())
 
-    @cache
     def _solver(self):
-        previous_history = self._four_calls_ago
-        solver = previous_history._solver.take(
-        ) if previous_history else _solver_pool.borrow()
-        solver.add(self._constraints_for_last_call)
+        if not hasattr(self, '_solver_instance'):
+            previous_history = self._four_calls_ago
+            solver = previous_history._take_solver() if previous_history else _solver_pool.borrow()
+            solver.add(self._constraints_for_last_call)
+            self._solver_instance = solver
+        return self._solver_instance
+
+    def _take_solver(self):
+        solver = self._solver()
+        del self._solver_instance
         return solver
 
     @property

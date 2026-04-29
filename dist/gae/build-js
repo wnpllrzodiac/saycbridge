@@ -1,0 +1,16 @@
+#!/bin/sh
+# Pre-compile all CoffeeScript files to .js for production serving.
+SCRIPTS_DIR="$(dirname "$0")/scripts"
+COFFEE_BIN="${COFFEE_BIN:-/home/zodiac/work/tools/node-v22.21.0-linux-x64/bin/coffee}"
+
+if ! [ -x "$COFFEE_BIN" ]; then
+    COFFEE_BIN="$(which coffee 2>/dev/null)"
+fi
+if [ -z "$COFFEE_BIN" ]; then
+    echo "Error: coffee not found. Set COFFEE_BIN or add it to PATH." >&2
+    exit 1
+fi
+
+echo "Compiling CoffeeScript in $SCRIPTS_DIR ..."
+"$COFFEE_BIN" --compile "$SCRIPTS_DIR"
+echo "Done."

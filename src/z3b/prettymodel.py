@@ -1,12 +1,7 @@
-from __future__ import print_function
 # Copyright (c) 2013 The SAYCBridge Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-from builtins import zip
-from builtins import str
-from builtins import map
-from builtins import range
 from z3b.model import _honor_vars
 from core.hand import Hand
 from core.suit import SUITS

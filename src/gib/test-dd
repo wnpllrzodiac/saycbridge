@@ -5,7 +5,7 @@
 
 import logging
 import os.path
-import unittest2
+import unittest
 import sys
 
 gib_dir = os.path.dirname(__file__)
@@ -40,4 +40,4 @@ if __name__ == '__main__':
 
     board = Board.from_identifier(args[0])
     gib = Gib()
-    print gib.solve_double_dummy(board)
+    print(gib.solve_double_dummy(board))

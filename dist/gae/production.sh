@@ -13,5 +13,6 @@ do
     git branch -D production
     git checkout origin/production -b production
 
-    make serve-prod
+    dist/gae/build-js
+    python dist/gae/app.py
 done

@@ -287,10 +287,10 @@ class DealView extends PositionGrid
 class SuitCount extends HTMLSpanElement
     constructor: (@count) ->
         @className = 'suitcount'
-        if count > 7
+        if @count > 7
             @style.color = 'blue'
             @style.fontWeight = 'bold'
-        @textContent = count
+        @textContent = @count
 
     @fromCount: (count) ->
         return alloc @, count
@@ -299,10 +299,10 @@ class SuitCount extends HTMLSpanElement
 class PointCount extends HTMLSpanElement
     constructor: (@count) ->
         @className = 'pointcount'
-        if count > 24
+        if @count > 24
             @style.color = 'blue'
             @style.fontWeight = 'bold'
-        @textContent = count
+        @textContent = @count
 
     @fromCount: (count) ->
         return alloc @, count
@@ -350,7 +350,7 @@ class BidLevel extends HTMLSpanElement
 class CallCard extends HTMLTableCellElement
     constructor: (@call) ->
         @className = 'callcard'
-        @appendChild CallView.fromCall(call, true)
+        @appendChild CallView.fromCall(@call, true)
 
     @fromCall: (call) ->
         return alloc @, call
@@ -638,9 +638,9 @@ class ContractAndDeclarerView extends HTMLSpanElement
         if @callHistory.isPassOut()
             @textContent = 'Pass Out'
         else
-            @appendChild ContractView.fromContract(callHistory.contract())
+            @appendChild ContractView.fromContract(@callHistory.contract())
             @appendChild document.createTextNode " "
-            @appendChild document.createTextNode callHistory.declarer().name
+            @appendChild document.createTextNode @callHistory.declarer().name
 
     @fromHistory: (callHistory) ->
         return alloc @, callHistory

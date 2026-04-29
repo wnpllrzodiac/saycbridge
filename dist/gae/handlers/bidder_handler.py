@@ -2,13 +2,8 @@
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
 
-import webapp2
-import jinja2
-import os
-
-jinja_environment = jinja2.Environment(loader=jinja2.FileSystemLoader("templates"))
+from flask import render_template
 
 
-class BidderHandler(webapp2.RequestHandler):
-    def get(self):
-        self.response.out.write(jinja_environment.get_template('bidder.html').render())
+def bidder(rest=None):
+    return render_template('bidder.html')
