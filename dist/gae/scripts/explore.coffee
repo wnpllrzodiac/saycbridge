@@ -5,10 +5,10 @@ class Explore
         @setupView()
 
     basePathAndCallHistoryFromPath: (path) ->
-        pathWithoutLeadingSlash = path[1..]
-        if '/' in pathWithoutLeadingSlash
-            [basePath, callsString] = pathWithoutLeadingSlash.split('/')
-            basePath = "/" + basePath
+        lastSlash = path.lastIndexOf('/')
+        if lastSlash > 0
+            basePath = path[0...lastSlash]
+            callsString = path[lastSlash + 1..]
         else
             basePath = path
             callsString = ""
@@ -21,7 +21,7 @@ class Explore
         return [basePath, callHistory]
 
     pathForCallsString: (callsString) ->
-        return "/explore/" + callsString
+        return @basePath + "/" + callsString
 
     saveState: ->
         callsString = @callHistory.identifier()
