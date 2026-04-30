@@ -678,7 +678,7 @@ class ExploreLink extends HTMLAnchorElement
         @lastCall = calls.pop()
         @previousCalls = calls
         @appendChild CallView.fromCall(@lastCall)
-        @href = '/explore/' + (call.name for call in @previousCalls).join(",")
+        @href = (window.URL_PREFIX || '') + '/explore/' + (call.name for call in @previousCalls).join(",")
 
     @fromPartialHistory: (calls) ->
         return alloc @, calls
