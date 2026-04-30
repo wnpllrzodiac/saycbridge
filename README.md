@@ -112,6 +112,21 @@ correct asset and navigation URLs:
 
     Environment=URL_PREFIX=/hp/bridge
 
+**Accessing with and without the reverse proxy:**
+
+When `URL_PREFIX` is set, the app automatically strips the prefix from incoming
+requests. This means all three access patterns work simultaneously without any
+additional configuration:
+
+| Access method | URL pattern |
+|---|---|
+| Via reverse proxy (WAN) | `https://yourdomain.com:PORT/hp/bridge/` |
+| Direct with prefix (LAN) | `http://192.168.x.x:19883/hp/bridge/` |
+| Direct without prefix (LAN) | `http://192.168.x.x:19883/` |
+
+The nginx reverse proxy strips the prefix before forwarding; the app's built-in
+middleware handles stripping it on direct connections.
+
 > **Note:** There is a known Z3 memory leak — the process will grow memory under
 > load. Consider adding memory limits in the systemd unit or wrapping the app in
 > the `production.sh` restart loop.

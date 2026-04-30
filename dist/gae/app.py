@@ -82,6 +82,21 @@ app.add_url_rule('/scoring/<path:rest>', view_func=score_flashcards, endpoint='s
 
 app.add_url_rule('/unittests', view_func=unittests)
 
+if URL_PREFIX:
+    _prefix = URL_PREFIX
+
+    class _PrefixMiddleware:
+        def __init__(self, wsgi_app):
+            self.wsgi_app = wsgi_app
+
+        def __call__(self, environ, start_response):
+            path = environ.get('PATH_INFO', '')
+            if path.startswith(_prefix + '/') or path == _prefix:
+                environ['PATH_INFO'] = path[len(_prefix):] or '/'
+            return self.wsgi_app(environ, start_response)
+
+    app.wsgi_app = _PrefixMiddleware(app.wsgi_app)
+
 if __name__ == '__main__':
     import os
     debug = os.environ.get('DEBUG', '0') == '1'
